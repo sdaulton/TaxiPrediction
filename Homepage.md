@@ -1,6 +1,5 @@
 # NYC Taxi Data Prediction: Harvard CS109 project
 
-Welcome to our Data Science project page. 
 
 ![image](https://github.com/sdaulton/TaxiPrediction/raw/master/images/Actual-Predicted.gif)
 
