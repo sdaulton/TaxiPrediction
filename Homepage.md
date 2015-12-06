@@ -25,7 +25,7 @@ The above image shows the Actual Vs Predicted number of pickups at different loc
 * Data cleansing: We had to parse 440 million records and remove dirty records (e.g. nulls, invalid lat/long etc)
 * Feature extraction
   * Location features: We used geohashing to discretize the location data. This is very important because we were able to adjust the granularity of the precision of the location (different size of rectangles) - and make predictions on these locations.
-  * We also added additional features like cosine & sine on some of the daata fields (more information in our notebooks)
+  * We also added additional features like cosine & sine on some of the data fields (more information in our notebooks)
   * We grouped the entire dataset by time of the day(binned), day of the week & location (geohash).
 
 ### 3.3 Exploratory data analysis
