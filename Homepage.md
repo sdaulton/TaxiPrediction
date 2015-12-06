@@ -4,7 +4,7 @@ Welcome to our Data Science project page.
 
 ![image](https://github.com/sdaulton/TaxiPrediction/raw/master/images/Actual-Predicted.gif)
 
-The above image shows the Actual VS Predicted #pickups at different times during any given Monday
+The above image shows the Actual Vs Predicted number of pickups at different locations & times during any given Monday
 
 ## 1. What we did
 1. We analyzed around 2.5 years of NYC taxi trip data - around 440 million records. We used spark to pre-process and cleanse the data, and ran our machine learning models. 
