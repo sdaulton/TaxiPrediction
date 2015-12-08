@@ -27,15 +27,15 @@ So, given a specific location, date and time, can we  predict the number of pick
 2. **Traffic planning**: Planners can use the model predictions for traffic management on specific day/time/locations. The model can be enhanced in future to incorporate features like weather, holiday etc.
 3. **Data scientists**: It is interesting for data scientist to see how we have modeled location data in a simple way and yet able to get reasonably good predictions
 
-## Approach
+## Our Approach
 
-### Google BigQuery and Amazon's Web Services to the rescue!
+### 1. Google BigQuery and Amazon's Web Services to the rescue!
 
 * The data is currently available in Google BigQuery, which allowed us to explore the data directly in Tableau.
 * We used AWS to setup a 5 node Spark cluster (each machine had 8 cores, 16 GB RAM), and configured the cluster setup to leverage maximum resources by Spark.
 * We especially used the cluster to load the 60+ GB of raw data into an Amazon S3 bucket, and to process and prepare the data for input into the Machine Learning algorithm.
 
-### Data preparation with Apache Spark
+#### Data preparation with Apache Spark
 
 * Data cleansing: We had to parse 440 million records and remove dirty records (e.g. nulls, invalid geographical coordinates, etc.)
 * Feature extraction:
@@ -43,10 +43,10 @@ So, given a specific location, date and time, can we  predict the number of pick
   * We also added additional features like cosine & sine on some of the data fields (more information in our notebooks)
   * We grouped the entire dataset by time of the day(binned), day of the week & location (geohash).
 
-### 3.3 Exploratory data analysis
+### 2.  Exploratory data analysis
 * Our exploratory data analysis was primarily done using Tableau
 
-### 3.4 Machine learning (Pandas/Scikit learn)
+### 3. Machine learning (Pandas/Scikit learn)
 * We used Random Forest based regression
 * The main features we used were
   * discretized latitude/longitude (derived back from geohashes)
@@ -59,6 +59,6 @@ So, given a specific location, date and time, can we  predict the number of pick
 * [Sethu Raman](http://github.com/rsethur)
 * [Tijl Kindt](http://github.com/tijlk)
 
-## 5. Citations/Credit/References
+### 5. Citations/Credit/References
 1. Thanks to Harvard CS109 TF's: [Rahul Dave](https://github.com/rahuldave) & Team: we used parts of their code in multiple places: (a) Cluster setup in AWS (b) Machine learning
 2. [Geohash.py](https://github.com/hkwi/python-geohash): A nice geohash library
