@@ -29,22 +29,21 @@ So, given a specific location, date and time, can we  predict the number of pick
 
 ## Our Approach
 
-### 1. Google BigQuery and Amazon's Web Services to the rescue!
+### 1. Data preparation with Apache Spark on a Amazon Web Services Cluster
 
-* The data is currently available in Google BigQuery, which allowed us to explore the data directly in Tableau.
+
 * We used AWS to setup a 5 node Spark cluster (each machine had 8 cores, 16 GB RAM), and configured the cluster setup to leverage maximum resources by Spark.
 * We especially used the cluster to load the 60+ GB of raw data into an Amazon S3 bucket, and to process and prepare the data for input into the Machine Learning algorithm.
 
-#### Data preparation with Apache Spark
-
-* Data cleansing: We had to parse 440 million records and remove dirty records (e.g. nulls, invalid geographical coordinates, etc.)
+#### Data cleansing: 
+* We had to parse 440 million records and remove dirty records (e.g. nulls, invalid geographical coordinates, etc.)
 * Feature extraction:
   * Location features: We used geohashing to discretize the location data. This is very important because we were able to adjust the granularity of the precision of the location (different size of rectangles) - and make predictions on these locations.
   * We also added additional features like cosine & sine on some of the data fields (more information in our notebooks)
   * We grouped the entire dataset by time of the day(binned), day of the week & location (geohash).
 
 ### 2.  Exploratory data analysis
-* Our exploratory data analysis was primarily done using Tableau
+* The data is currently available in Google BigQuery, which allowed us to explore the data directly in Tableau.
 
 ### 3. Machine learning (Pandas/Scikit learn)
 * We used Random Forest based regression
