@@ -13,7 +13,7 @@ The subway system digests the lion share of NYC's public transport use, but the 
 
 ## 440 million taxi trips
 
-Thanks to some FOIL requests, data about these taxi trips has been available to the public since last year, making it a data scientist's wet dream. We endeavoured to delve into this gold mine using 2.5 years of NYC taxi trip data - around 440 million records - going from January 2013 to June 2015.
+Thanks to some FOIL requests, data about these taxi trips has been available to the public since last year, making it a data scientist's dream. We endeavoured to delve into this gold mine using 2.5 years of NYC taxi trip data - around 440 million records - going from January 2013 to June 2015.
 
 ## Predicting pickup density
 
