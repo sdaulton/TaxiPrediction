@@ -13,7 +13,7 @@ The subway system digests the lion share of NYC's public transport use, but the 
 
 ## 440 million taxi trips
 
-Thanks to some FOIL requests, data about these taxi trips has been available to the public since last year, making it a data scientist's wet dream. We endeavoured to delve into this gold mine using 2.5 years of NYC taxi trip data - around 440 million records - going from January 2013 to June 2015.
+Thanks to some FOIL requests, data about these taxi trips has been available to the public since last year, making it a data scientist's dream. We endeavoured to delve into this gold mine using 2.5 years of NYC taxi trip data - around 440 million records - going from January 2013 to June 2015.
 
 ## Predicting pickup density
 
@@ -55,9 +55,9 @@ So, given a specific location, date and time, can we  predict the number of pick
 * The model performed very well with a RMSE on test data of 0.9505: we attribute this success to how we modeled the data - and importantly to how the Random Forest algorithm is able to capture the complexities in the above features and come out with a great predictor.
 
 ### 4. The Project Team
-* Samuel Daulton
-* Sethu Raman
-* Tijl Kindt
+* [Samuel Daulton](http://github.com/sdaulton)
+* [Sethu Raman](http://github.com/rsethur)
+* [Tijl Kindt](http://github.com/tijlk)
 
 ## 5. Citations/Credit/References
 1. Thanks to Harvard CS109 TF's: [Rahul Dave](https://github.com/rahuldave) & Team: we used parts of their code in multiple places: (a) Cluster setup in AWS (b) Machine learning
