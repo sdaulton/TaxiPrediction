@@ -3,7 +3,7 @@
 
 ![image](https://github.com/sdaulton/TaxiPrediction/raw/master/images/Actual-Predicted.gif)
 
-The above image shows the Actual Vs Predicted number of pickups at different locations & times during any given Monday
+The above image shows the predicted number of pickups on a given Monday using a random forest regressor on the the left and the actual number of pickups on the right.  The sheet number at the top of each image corresponds to the hour of the day.
 
 ## A NYC icon: the yellow taxicab
 
@@ -51,7 +51,7 @@ So, given a specific location, date and time, can we  predict the number of pick
   * discretized latitude/longitude (derived back from geohashes)
   * discretized time - but encoded in 0 to 1
   * other features: number of pickups, day of week etc
-* The model performed very well with a RMSE on test data of 0.9505: we attribute this success to how we modeled the data - and importantly to how the Random Forest algorithm is able to capture the complexities in the above features and come out with a great predictor.
+* The model performed very well with a oefficient of determination (R-squared) on the test data of 0.9505: we attribute this success to how we modeled the data - and importantly to how the Random Forest algorithm is able to capture the complexities in the above features and come out with a great predictor.
 
 ### 4. The Project Team
 * [Samuel Daulton](http://github.com/sdaulton)
