@@ -51,7 +51,7 @@ So, given a specific location, date and time, can we  predict the number of pick
   * discretized latitude/longitude (derived back from geohashes)
   * discretized time - but encoded in 0 to 1
   * other features: number of pickups, day of week etc
-* The model performed very well with a RMSE on test data of 0.9505: we attribute this success to how we modeled the data - and importantly to how the Random Forest algorithm is able to capture the complexities in the above features and come out with a great predictor.
+* The model performed very well with a correlation coefficient on the test data of 0.9505: we attribute this success to how we modeled the data - and importantly to how the Random Forest algorithm is able to capture the complexities in the above features and come out with a great predictor.
 
 ### 4. The Project Team
 * [Samuel Daulton](http://github.com/sdaulton)
