@@ -3,7 +3,7 @@
 
 ![image](https://github.com/sdaulton/TaxiPrediction/raw/master/images/Actual-Predicted.gif)
 
-The above image shows the Actual Vs Predicted number of pickups at different locations & times during any given Monday
+The above image shows the number of pickups on a Monday predicted using a random forest regressor on the the left and the actual number of pickups on the right.  The sheet number at the top of each image corresponds to the hour of the day.
 
 ## A NYC icon: the yellow taxicab
 
