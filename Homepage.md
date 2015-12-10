@@ -72,7 +72,7 @@ So, given a specific location, date and time, can we  predict the number of pick
  
 
 ##### Predicted Density Distribution vs. Actual Density Distribution on a Monday
-![image](https://github.com/sdaulton/TaxiPrediction/raw/master/images/Actual-Predicted.gif)
+![image](https://raw.githubusercontent.com/sdaulton/TaxiPrediction/master/figures/monday-24hours.gif)
 
 The above image shows the predicted number of pickups on a given Monday using a random forest regressor on the the left and the actual number of pickups on the right.  The sheet number at the top of each image corresponds to the hour of the day.
 
