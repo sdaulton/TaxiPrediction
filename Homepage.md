@@ -3,6 +3,8 @@
 
 # The Yellow Taxicab: an NYC Icon
 
+[![Harvard Data Science Final Project Video](http://img.https://www.youtube.com/watch?v=QjmlPxemfOo&feature=youtu.be/0.jpg)](https://youtu.be/QjmlPxemfOo)
+
 New York City, being the most populous city in the United States, has a vast and complex transportation system, including one of the largest subway systems in the world and a large fleet of more than 13,000 yellow and green taxis, that have become iconic subjects in photographs and movies.
 
 The subway system digests the lion share of NYC's public transport use, but the 54% of NYC's residents that don't own a car and therefore rely on public transportation still take almost 200 million taxi trips per year!
