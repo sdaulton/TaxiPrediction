@@ -31,12 +31,15 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <p><img src="https://github.com/sdaulton/TaxiPrediction/raw/master/images/Actual-Predicted.gif" alt="image"></p>
+        <h1>
+<a id="nyc-taxi-data-prediction-harvard-cs109-project" class="anchor" href="#nyc-taxi-data-prediction-harvard-cs109-project" aria-hidden="true"><span class="octicon octicon-link"></span></a>NYC Taxi Data Prediction: Harvard CS109 project</h1>
 
-<p>The above image shows the Actual Vs Predicted number of pickups at different locations &amp; times during any given Monday</p>
+<p><img src="https://github.com/sdaulton/TaxiPrediction/raw/master/images/Actual-Predicted.gif" alt="image"></p>
+
+<p>The above image shows the predicted number of pickups on a given Monday using a random forest regressor on the the left and the actual number of pickups on the right.  The sheet number at the top of each image corresponds to the hour of the day.</p>
 
 <h2>
-<a id="a-nyc-icon-the-yellow-taxicab" class="anchor" href="#a-nyc-icon-the-yellow-taxicab" aria-hidden="true"><span class="octicon octicon-link"></span></a>A NYC icon: the yellow taxicab</h2>
+<a id="the-yellow-taxicab-an-nyc-icon" class="anchor" href="#the-yellow-taxicab-an-nyc-icon" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Yellow Taxicab: an NYC Icon</h2>
 
 <p>New York City, being the most populous city in the United States, has a vast and complex transportation system, including one of the largest subway systems in the world and a large fleet of more than 13,000 yellow and green taxis, that have become iconic subjects in photographs and movies.</p>
 
@@ -46,6 +49,14 @@
 <a id="440-million-taxi-trips" class="anchor" href="#440-million-taxi-trips" aria-hidden="true"><span class="octicon octicon-link"></span></a>440 million taxi trips</h2>
 
 <p>Thanks to some FOIL requests, data about these taxi trips has been available to the public since last year, making it a data scientist's dream. We endeavoured to delve into this gold mine using 2.5 years of NYC taxi trip data - around 440 million records - going from January 2013 to June 2015.</p>
+
+<h3>
+<a id="the-data" class="anchor" href="#the-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Data:</h3>
+
+<ul>
+<li>
+<a href="http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml">Raw NYC Taxi Trip Data</a> </li>
+</ul>
 
 <h2>
 <a id="predicting-pickup-density" class="anchor" href="#predicting-pickup-density" aria-hidden="true"><span class="octicon octicon-link"></span></a>Predicting pickup density</h2>
@@ -112,7 +123,7 @@
 <li>other features: number of pickups, day of week etc</li>
 </ul>
 </li>
-<li>The model performed very well with a RMSE on test data of 0.9505: we attribute this success to how we modeled the data - and importantly to how the Random Forest algorithm is able to capture the complexities in the above features and come out with a great predictor.</li>
+<li>The model performed very well with a oefficient of determination (R-squared) on the test data of 0.9505: we attribute this success to how we modeled the data - and importantly to how the Random Forest algorithm is able to capture the complexities in the above features and come out with a great predictor.</li>
 </ul>
 
 <h3>
