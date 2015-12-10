@@ -14,6 +14,7 @@ Thanks to some FOIL requests, data about these taxi trips has been available to 
 
 ### The Data:
 * [Raw NYC Taxi Trip Data](http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml) 
+* [NYC Weather Data](https://raw.githubusercontent.com/sdaulton/TaxiPrediction/master/data/nyc-weather-data.csv) from [NOAA](http://www.ncdc.noaa.gov/cdo-web/datasets)
 
 ## Predicting pickup density
 
