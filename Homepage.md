@@ -32,7 +32,8 @@ So, given a specific location, date and time, can we  predict the number of pick
 
 ### 1.  Exploratory data analysis
 * The data is currently available in Google BigQuery, which allowed us to explore the data directly in Tableau.
-* ![image](https://github.com/sdaulton/TaxiPrediction/blob/master/figures/pickups-time-heatmap.jpg)
+
+![image](https://github.com/sdaulton/TaxiPrediction/blob/master/figures/pickups-time-heatmap.jpg)
 
 ### 2. Data preparation with Apache Spark on a Amazon Web Services (AWS) Cluster
 
@@ -43,9 +44,8 @@ So, given a specific location, date and time, can we  predict the number of pick
 * We had to parse 440 million records and remove dirty records (e.g. nulls, invalid geographical coordinates, etc.)
 * Feature extraction:
   * Location features: We used geohashing to discretize the location data. This is very important because we were able to adjust the granularity of the precision of the location (different size of rectangles) - and make predictions on these locations.
-  * We also added additional features like cosine & sine on some of the data fields (more information in our notebooks)
-  * We grouped the entire dataset by time of the day(binned), day of the week & location (geohash).
-
+  * We also added additional features like cosine & sine on the time and day of the week fields (see our [notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/DataPrepAWSSpark.ipynb) for more information in our notebooks)
+  * We grouped the entire dataset by time of the day(binned), day of the week & location ([geohash](https://github.com/hkwi/python-geohash)).
 
 ### 3. Machine learning (Pandas/Scikit learn)
 #### Approach 1: Predicting the pickup density for an average day of week and time of day
@@ -59,13 +59,17 @@ So, given a specific location, date and time, can we  predict the number of pick
 * The Random Forest model performed very well with a coefficient of determination (R-squared) on the test data of 0.9505, indicating that variation in the model explains over 95% of the variation in the pickup density distribution.  We attribute this success to:
   * How we modeled the data
   * The abiltiy of the Random Forest algorithm is able to capture the complexities in the above features
+ 
+##### Predicted Density Distribution vs. Actual Density Distribution on a Monday
+![image](https://github.com/sdaulton/TaxiPrediction/raw/master/images/Actual-Predicted.gif)
+
+The above image shows the predicted number of pickups on a given Monday using a random forest regressor on the the left and the actual number of pickups on the right.  The sheet number at the top of each image corresponds to the hour of the day.
+
+
 
 #### Approach 2: Predicting the pickup density for a specific date and time
 * We used Random Forest regression: ([notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/Machine%20Learning%20(Random%20Forest%2C%20train-valid-test).ipynb))
 
-![image](https://github.com/sdaulton/TaxiPrediction/raw/master/images/Actual-Predicted.gif)
-
-The above image shows the predicted number of pickups on a given Monday using a random forest regressor on the the left and the actual number of pickups on the right.  The sheet number at the top of each image corresponds to the hour of the day.
 
 
 ### 4. The Project Team
