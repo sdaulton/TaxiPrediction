@@ -71,7 +71,7 @@ Throughout the days of the year (horizontal axis) and the hours of the day (vert
   * Other features: number of pickups, day of week, etc
 * The Random Forest model performed very well with a coefficient of determination (R-squared) on the test data of 0.9505, indicating that variation in the model explains over 95% of the variation in the pickup density distribution.  We attribute this success to:
   * How we modeled the data
-  * The abiltiy of the Random Forest algorithm is able to capture the complexities in the above features
+  * The ability of the Random Forest algorithm to capture the complexities in the above features, and especially latitude and longitude
 * A taxi company could use this type of prediction for developing long-term policies for improved taxi distribution.
  
 
@@ -82,22 +82,30 @@ The above image shows the predicted number of pickups on a given Monday using a 
 
 
 ##### Approach 2: Predicting the pickup density for a specific date and time in the future
-* To make predictions about the future, we separated pre-2015 records from 2015 records, while keeping the data of each specific day of the year seperate
+* To make predictions about the future, we separated pre-2015 records from 2015 records, while keeping the data of each specific day of the year separate
 * Combined NYC taxi trip data with features extracted from NYC weather data
-* We trained a Random Forest regressor using pre-2015 data and tested regressor by on the 2015  data([notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/4b.%20Random%20Forest%20(specific%20days).ipynb))
+* We trained a Random Forest regressor using pre-2015 data and tested regressor by on the 2015 data ([notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/4b.%20Random%20Forest%20(specific%20days).ipynb))
 *  A taxi company could use this type of prediction on a daily basis to tune their policies based on weather or other factors to maximize coverage on a specific day.
 
 **Predicted Density Distribution vs. Actual Density Distribution on a Specific Date in the Future**
 ![image](https://github.com/sdaulton/TaxiPrediction/raw/master/figures/pickup-density-may-1.gif)
  
-Note: the noise in the data became more apparent when we used this fine temporal granularity, and the prediction accuracy decreased.  We believe this results from the regressor thinking that that no data for a particular location and time means the number of pickups is unknown.  Of course in reality, no records for a particualr location and time means zero pickups at that location and time.  We hypothesize that this misunderstanding leads to the widespread overprediction in areas outside Manhattan.
+Note: the noise in the data became more apparent when we used this fine temporal granularity, and the prediction accuracy decreased.  We believe this results from the regressor thinking that that no data for a particular location and time means the number of pickups is unknown.  Of course in reality, no records for a particular location and time means zero pickups at that location and time, because we assume that all taxi trips are recorded.  We hypothesize that this shortcoming in our data preparation leads to the widespread overprediction in areas outside Manhattan.
 
 ##### Approach 3: Predicting the dropoff location (lat/long) based on the pickup location & time, day of week
 * Here we aggregated the dataset by pickup location, dropoff location, day of week & time slot: [notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/5a.%20Destinations%20-%20DataPrepAWSSpark.ipynb)
-* We trained a random forest model on this for multi output regression: predicting two variables (dropoff lat/long): [notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/5b.%20Destinations%20-%20Random%20Forest.ipynb)
+* We trained a random forest model on this for multi output regression: predicting two variables (dropoff lat/long): [notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/5b.%20Destinations%20-%20Random%20Forest.ipynb). So the idea was that given that somebody hails a cab at location X, we would want to predict where that customer wants to be dropped of.
 * The best RMSE value that we got was 0.120. In NYC each longitude is approx 53 miles & latitude is approx 69 miles (see notebook for refernece). This **gives an error range of 6.36 x 8.28 square miles**. So we do not have a great predictor here (but a great learning experience in modeling this problem)
 
-<script type='text/javascript' src='https://public.tableau.com/javascripts/api/viz_v1.js'></script><div class='tableauPlaceholder' style='width: 804px; height: 519px;'><noscript><a href='#'><img alt='Where do people go from where? ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;pi&#47;pickup-destination-coupling&#47;Dashboard1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz' width='804' height='519' style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='site_root' value='' /><param name='name' value='pickup-destination-coupling&#47;Dashboard1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;pi&#47;pickup-destination-coupling&#47;Dashboard1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='showVizHome' value='no' /><param name='showTabs' value='y' /><param name='bootstrapWhenNotified' value='true' /></object></div>
+You can play around in Tableau below to explore the dropoff locations, given a pickup location.
+
+<iframe
+  style="border: 0px;"
+  src="http://public.tableausoftware.com/views/pickup-destination-coupling/Dashboard1?:embed=y&amp;:from_wg=true"
+  scrolling="no"
+  width="804px"
+  height="519px">
+</iframe>
 
 ### 4. Next Steps:
 To really make this last model shine we would have to adjust the data preparation, so that we feed information about locations without any pickups to the model as well. Right now our model receives no data about the number of pickups in these locations is and thus thinks that the number of pickups is unknown.  However, the absence of records at some locations means that there were zero rides in that time period.  We believe that training a model with that knowledge would lead to more accurate predictions for the number of pickups on a specific date and time, such asMay 1st at 6am.  
