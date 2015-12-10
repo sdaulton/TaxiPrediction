@@ -1,38 +1,44 @@
 
 ![image](https://github.com/sdaulton/TaxiPrediction/raw/master/figures/2013-24hours.gif)
 
-
-## The Yellow Taxicab: an NYC Icon
+# The Yellow Taxicab: an NYC Icon
 
 New York City, being the most populous city in the United States, has a vast and complex transportation system, including one of the largest subway systems in the world and a large fleet of more than 13,000 yellow and green taxis, that have become iconic subjects in photographs and movies.
 
 The subway system digests the lion share of NYC's public transport use, but the 54% of NYC's residents that don't own a car and therefore rely on public transportation still take almost 200 million taxi trips per year!
 
-## 440 million taxi trips
+### 440 million taxi trips
 
-Thanks to some FOIL requests, data about these taxi trips has been available to the public since last year, making it a data scientist's dream. We endeavoured to delve into this gold mine using 2.5 years of NYC taxi trip data - around 440 million records - going from January 2013 to June 2015.
+Thanks to some [FOIL requests](https://www.dos.ny.gov/coog/freedomfaq.html), data about these taxi trips has been available to the public since last year, making it a data scientist's dream. We endeavoured to delve into this gold mine using 2.5 years of NYC taxi trip data - around 440 million records - going from January 2013 to June 2015.
 
-### The Data:
-* [Raw NYC Taxi Trip Data](http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml) 
-* [NYC Weather Data](https://raw.githubusercontent.com/sdaulton/TaxiPrediction/master/data/nyc-weather-data.csv) from [NOAA](http://www.ncdc.noaa.gov/cdo-web/datasets)
 
-## Predicting pickup density
+### Predicting pickup density
 
 The primary objective of this project was to predict the density of taxi pickups throughout New York City as it changes from day to day and hour to hour.
 
-So, given a specific location, date and time, can we  predict the number of pickups in that location to a reasonably high accuracy?
+So, given a specific location, date and time, can we  predict the number of pickups in that location to a reasonably high accuracy? A secondary objective was to also predict the dropoff location.
 
-## To make transportation more efficient
+### Making transportation more efficient
 
 1. **Taxi companies**: Companies can maximize their utilization by diverting the cabs into the locations during specific times
 2. **Traffic planning**: Planners can use the model predictions for traffic management on specific day/time/locations. The model can be enhanced in future to incorporate features like weather, holiday etc.
 3. **Data scientists**: It is interesting for data scientist to see how we have modeled location data in a simple way and yet able to get reasonably good predictions
 
+### Random forests find the hot spots
 
-## Our Approach
+After preparing the data in the cloud with Amazon Web Services, we trained random forests with deep trees to predict the pickup density. We did that in two approaches, one which predicts pickup density on an average day of the week (e.g. Mondays). A second forest predicts pickup density on a specific day (e.g. May 1, 2015). The first performs really well, being able to account for 95% of the variation in the data. The second still does reasonable well, predicting density within about a factor of 1.5.
 
-### 1.  Exploratory data analysis
-* The data is currently available in Google BigQuery, which allowed us to explore the data directly in Tableau.
+Lastly, we started work on predicting where people wanted to go, based on their pickup location. Initial results aren't terribly good, but we have ideas to improve upon this.
+
+# Our Approach
+
+### 1. **The data we used:**
+
+* [Raw NYC Taxi Trip Data](http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml) 
+* [NYC Weather Data](https://raw.githubusercontent.com/sdaulton/TaxiPrediction/master/data/nyc-weather-data.csv) from [NOAA](http://www.ncdc.noaa.gov/cdo-web/datasets)
+
+### 2.  Exploratory data analysis
+* The data is currently available in [Google BigQuery](https://bigquery.cloud.google.com/table/imjasonh-storage:nyctaxi.trip_data), which allowed us to explore the data directly in Tableau.
 
 #### Number of Pickups in 2013 and 2014
 ##### throughout the days of the year (horizontal axis) and the hours of the day (vertical axis)
@@ -40,9 +46,9 @@ So, given a specific location, date and time, can we  predict the number of pick
 
 
 
-### 2. Data preparation with Apache Spark on a Amazon Web Services (AWS) Cluster
+### 3. Data preparation with Apache Spark on a Amazon Web Services (AWS) Cluster
 
-* We used AWS to setup a 5-node Spark cluster (each machine had 8 cores, 16 GB RAM), and configured the cluster setup to leverage maximum resources by Spark.
+* We used Amazon Web Services (AWS) to setup a 5-node Spark cluster (each machine had 8 cores, 16 GB RAM), and configured the cluster setup to leverage maximum resources by Spark.
 * We especially used the cluster to load the 60+ GB of raw data into an Amazon S3 bucket, and to process and prepare the data for input into machine learning algorithms.
 
 #### Data cleansing: ([notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/DataPrepAWSSpark.ipynb))
@@ -55,7 +61,7 @@ So, given a specific location, date and time, can we  predict the number of pick
 
 
 
-### 3. Machine learning (Pandas/Scikit learn)
+### 4. Machine learning (Pandas/Scikit learn)
 #### Approach 1: Predicting the pickup density for an average day of week and time of day
 * We used two models:
   * Random Forest regression: ([notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/Machine%20Learning%20(Random%20Forest).ipynb))
@@ -72,7 +78,7 @@ So, given a specific location, date and time, can we  predict the number of pick
  
 
 ##### Predicted Density Distribution vs. Actual Density Distribution on a Monday
-![image](https://github.com/sdaulton/TaxiPrediction/raw/master/images/Actual-Predicted.gif)
+![image](https://raw.githubusercontent.com/sdaulton/TaxiPrediction/master/figures/monday-24hours.gif)
 
 The above image shows the predicted number of pickups on a given Monday using a random forest regressor on the the left and the actual number of pickups on the right.  The sheet number at the top of each image corresponds to the hour of the day.
 
