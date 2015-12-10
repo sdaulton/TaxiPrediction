@@ -1,4 +1,4 @@
-# NYC Taxi Data Prediction
+
 
 ![image](https://github.com/sdaulton/TaxiPrediction/blob/master/figures/2013-24hours.gif)
 
