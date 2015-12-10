@@ -81,7 +81,7 @@ The above image shows the predicted number of pickups on a given Monday using a 
 * Combined NYC taxi trip data with features extracted from NYC weather data
 * We trained a Random Forest regressor using pre-2015 data and tested regressor by on the 2015  data([notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/Machine%20Learning%20(Random%20Forest%2C%20train-valid-test).ipynb))
 *  A taxi company could use this type of prediction on a daily basis to tune their policies based on weather or other factors to maximize coverage on a specific day.
-*  
+
 ##### Predicted Density Distribution vs. Actual Density Distribution on a Specific Date in the Future
 ![image](https://github.com/sdaulton/TaxiPrediction/blob/master/figures/pickup-density-may-1.gif)
  
