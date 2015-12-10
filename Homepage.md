@@ -95,5 +95,5 @@ To really make this last model shine we would have to adjust the data preparatio
 * [Tijl Kindt](http://github.com/tijlk)
 
 ### Citations/Credit/References
-1. Thanks to Harvard CS109 TF's: [Rahul Dave](https://github.com/rahuldave) & Team: we used parts of their code in multiple places: (a) Cluster setup in AWS (b) Machine learning
+1. Thanks to Harvard AC209 TF's: [Rahul Dave](https://github.com/rahuldave) & Team: we used parts of their code in multiple places: (a) Cluster setup in AWS (b) Machine learning
 2. [Geohash.py](https://github.com/hkwi/python-geohash): A nice geohash library
