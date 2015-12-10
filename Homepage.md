@@ -5,7 +5,7 @@
 
 The above image shows the predicted number of pickups on a given Monday using a random forest regressor on the the left and the actual number of pickups on the right.  The sheet number at the top of each image corresponds to the hour of the day.
 
-## A NYC icon: the yellow taxicab
+## The Yellow Taxicab: an NYC Icon
 
 New York City, being the most populous city in the United States, has a vast and complex transportation system, including one of the largest subway systems in the world and a large fleet of more than 13,000 yellow and green taxis, that have become iconic subjects in photographs and movies.
 
@@ -14,6 +14,9 @@ The subway system digests the lion share of NYC's public transport use, but the 
 ## 440 million taxi trips
 
 Thanks to some FOIL requests, data about these taxi trips has been available to the public since last year, making it a data scientist's dream. We endeavoured to delve into this gold mine using 2.5 years of NYC taxi trip data - around 440 million records - going from January 2013 to June 2015.
+
+### The Data:
+* [Raw NYC Taxi Trip Data](http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml) 
 
 ## Predicting pickup density
 
