@@ -94,7 +94,7 @@ The above image shows the predicted number of pickups on a given Monday using a 
  
 Note: the noise in the data became more apparent when we used this fine temporal granularity, and the prediction accuracy decreased.  We believe this results from the regressor thinking that that no data for a particular location and time means the number of pickups is unknown.  Of course in reality, no records for a particualr location and time means zero pickups at that location and time.  We hypothesize that this misunderstanding leads to the widespread overprediction in areas outside Manhattan.
 
-#### Approach 3: Predicting the dropoff location (lat/long) based on the pickup location & time, day of week
+#### Approach 3: Predicting the dropoff location (lat/long) based on the pickup location, day of the week and particular time slot
 * Here we aggregated the dataset by pickup location, dropoff location, day of week & time slot: [notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/7a.%20Destinations%20(aggregated)%20data%20prep.ipynb)
 * We trained a random forest model on this for multi output regression: predicting two variables (dropoff lat/long): [notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/7b.%20Destination%20Prediction%20(Pandas%20and%20sklearn).ipynb)
 * The best RMSE value that we got was 0.120. In NYC each longitude is approx 53 miles & latitude is approx 69 miles (see notebook for refernece). This **gives an error range of 6.36 x 8.28 square miles**. So we do not have a great predictor here (but a great learning experience in modeling this problem)
