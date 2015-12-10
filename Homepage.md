@@ -1,6 +1,5 @@
 
-
-![image](https://github.com/sdaulton/TaxiPrediction/blob/master/figures/2013-24hours.gif)
+![image](https://github.com/sdaulton/TaxiPrediction/raw/master/figures/2013-24hours.gif)
 
 
 ## The Yellow Taxicab: an NYC Icon
@@ -36,7 +35,7 @@ So, given a specific location, date and time, can we  predict the number of pick
 
 #### Number of Pickups in 2013 and 2014
 ##### throughout the days of the year (horizontal axis) and the hours of the day (vertical axis)
-![image](https://github.com/sdaulton/TaxiPrediction/blob/master/figures/pickups-time-heatmap-no-title.jpg)
+![image](https://github.com/sdaulton/TaxiPrediction/raw/master/figures/pickups-time-heatmap-no-title.jpg)
 
 
 
