@@ -51,6 +51,9 @@
 <ul>
 <li>
 <a href="http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml">Raw NYC Taxi Trip Data</a> </li>
+<li>
+<a href="https://raw.githubusercontent.com/sdaulton/TaxiPrediction/raw/master/data/nyc-weather-data.csv">NYC Weather Data</a> from <a href="http://www.ncdc.noaa.gov/cdo-web/datasets">NOAA</a>
+</li>
 </ul>
 
 <h2>
@@ -102,6 +105,8 @@
 <a id="data-cleansing-notebook" class="anchor" href="#data-cleansing-notebook" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data cleansing: (<a href="https://github.com/sdaulton/TaxiPrediction/blob/master/DataPrepAWSSpark.ipynb">notebook</a>)</h4>
 
 <ul>
+<li>We setup our cluster in AWS and stored the dataset in S3 <a href="https://github.com/sdaulton/TaxiPrediction/blob/master/1.%20Setup%20Project.ipynb">notebook</a>
+</li>
 <li>We had to parse 440 million records and remove dirty records (e.g. nulls, invalid geographical coordinates, etc.)</li>
 <li>Feature extraction:
 
@@ -124,7 +129,7 @@
 
 <ul>
 <li>Random Forest regression: (<a href="https://github.com/sdaulton/TaxiPrediction/blob/master/Machine%20Learning%20(Random%20Forest).ipynb">notebook</a>)</li>
-<li>k-Nearest Neighbors regression: (<a href="https://github.com/sdaulton/TaxiPrediction/blob/master/Machine%20Learning%20(kNN).ipynb">notebook</a>)</li>
+<li>k-Nearest Neighbors regression: (<a href="https://github.com/sdaulton/TaxiPrediction/blpb/master/Machine%20Learning%20(kNN).ipynb">notebook</a>)</li>
 </ul>
 </li>
 <li>The main features we used were
@@ -159,11 +164,13 @@
 <li>To make predictions about the future, we separated pre-2015 records from 2015 records, while keeping the data of each specific day of the year seperate</li>
 <li>Combined NYC taxi trip data with features extracted from NYC weather data</li>
 <li>We trained a Random Forest regressor using pre-2015 data and tested regressor by on the 2015  data(<a href="https://github.com/sdaulton/TaxiPrediction/blob/master/Machine%20Learning%20(Random%20Forest%2C%20train-valid-test).ipynb">notebook</a>)</li>
-<li> A taxi company could use this type of prediction on a daily basis to tune their policies based on weather or other factors to maximize coverage on a specific day.
-##### Predicted Density Distribution vs. Actual Density Distribution on a Specific Date in the Future
-<img src="https://github.com/sdaulton/TaxiPrediction/blob/master/figures/pickup-density-may-1.gif" alt="image">
-</li>
+<li> A taxi company could use this type of prediction on a daily basis to tune their policies based on weather or other factors to maximize coverage on a specific day.</li>
 </ul>
+
+<h5>
+<a id="predicted-density-distribution-vs-actual-density-distribution-on-a-specific-date-in-the-future" class="anchor" href="#predicted-density-distribution-vs-actual-density-distribution-on-a-specific-date-in-the-future" aria-hidden="true"><span class="octicon octicon-link"></span></a>Predicted Density Distribution vs. Actual Density Distribution on a Specific Date in the Future</h5>
+
+<p><img src="https://github.com/sdaulton/TaxiPrediction/raw/master/figures/pickup-density-may-1.gif" alt="image"></p>
 
 <p>Note: the noise in the data became more apparent when we used this fine temporal granularity, and the prediction accuracy decreased.  We believe this results from the regressor thinking that that no data for a particular location and time means the number of pickups is unknown.  Of course in reality, no records for a particualr location and time means zero pickups at that location and time.  We hypothesize that this misunderstanding leads to the widespread overprediction in areas outside Manhattan.</p>
 
@@ -185,7 +192,7 @@
 <a id="citationscreditreferences" class="anchor" href="#citationscreditreferences" aria-hidden="true"><span class="octicon octicon-link"></span></a>Citations/Credit/References</h3>
 
 <ol>
-<li>Thanks to Harvard CS109 TF's: <a href="https://github.com/rahuldave">Rahul Dave</a> &amp; Team: we used parts of their code in multiple places: (a) Cluster setup in AWS (b) Machine learning</li>
+<li>Thanks to Harvard AC209 TF's: <a href="https://github.com/rahuldave">Rahul Dave</a> &amp; Team: we used parts of their code in multiple places: (a) Cluster setup in AWS (b) Machine learning</li>
 <li>
 <a href="https://github.com/hkwi/python-geohash">Geohash.py</a>: A nice geohash library</li>
 </ol>
