@@ -7,28 +7,25 @@ New York City, being the most populous city in the United States, has a vast and
 
 The subway system digests the lion share of NYC's public transport use, but the 54% of NYC's residents that don't own a car and therefore rely on public transportation still take almost 200 million taxi trips per year!
 
-### 440 million taxi trips
+### Predicting pickup density using 440 million taxi trips
 
 Thanks to some [FOIL requests](https://www.dos.ny.gov/coog/freedomfaq.html), data about these taxi trips has been available to the public since last year, making it a data scientist's dream. We endeavoured to delve into this gold mine using 2.5 years of NYC taxi trip data - around 440 million records - going from January 2013 to June 2015.
 
-
-### Predicting pickup density
-
-The primary objective of this project was to predict the density of taxi pickups throughout New York City as it changes from day to day and hour to hour.
-
-So, given a specific location, date and time, can we  predict the number of pickups in that location to a reasonably high accuracy? A secondary objective was to also predict the dropoff location.
+The primary objective of this project was to predict the density of taxi pickups throughout New York City as it changes from day to day and hour to hour. So, given a specific location, date and time, can we  predict the number of pickups in that location to a reasonably high accuracy? A secondary objective was to also predict the dropoff location.
 
 ### Making transportation more efficient
 
+Predictive models like these are interesting for many people, including of course the taxi companies themselves.
+
 1. **Taxi companies**: Companies can maximize their utilization by diverting the cabs into the locations during specific times
 2. **Traffic planning**: Planners can use the model predictions for traffic management on specific day/time/locations. The model can be enhanced in future to incorporate features like weather, holiday etc.
-3. **Data scientists**: It is interesting for data scientist to see how we have modeled location data in a simple way and yet able to get reasonably good predictions
+3. **Data scientists**: It is interesting for data scientists to see how we have modeled location data in a simple way and yet able to get reasonably good predictions
 
 ### Random forests find the hot spots
 
-After preparing the data in the cloud with Amazon Web Services, we trained random forests with deep trees to predict the pickup density. We did that in two approaches, one which predicts pickup density on an average day of the week (e.g. Mondays). A second forest predicts pickup density on a specific day (e.g. May 1, 2015). The first performs really well, being able to account for 95% of the variation in the data. The second still does reasonable well, predicting density within about a factor of 1.5.
+After preparing the data in the cloud with Amazon Web Services, we trained random forests with deep trees to predict the pickup density. We did that in two approaches, one which predicts pickup density on an average day of the week (e.g. Mondays). A second forest predicts pickup density on a specific day (e.g. May 1, 2015). The first performs really well, being able to account for 95% of the variation in the data. The second, which also incorporates weather data, still does reasonable well, predicting density within about a factor of 1.5.
 
-Lastly, we started work on predicting where people wanted to go, based on their pickup location. Initial results aren't terribly good, but we have ideas to improve upon this.
+Lastly, we started work on predicting where people wanted to be dropped off, based on their pickup location. Initial results aren't terribly good, but we have ideas to improve upon this.
 
 # Our Approach
 
@@ -40,29 +37,29 @@ Lastly, we started work on predicting where people wanted to go, based on their 
 ### 2.  Exploratory data analysis
 * The data is currently available in [Google BigQuery](https://bigquery.cloud.google.com/table/imjasonh-storage:nyctaxi.trip_data), which allowed us to explore the data directly in Tableau.
 
-#### Number of Pickups in 2013 and 2014
-##### throughout the days of the year (horizontal axis) and the hours of the day (vertical axis)
+**Number of Pickups in 2013 and 2014**
+
+Throughout the days of the year (horizontal axis) and the hours of the day (vertical axis)
 ![image](https://github.com/sdaulton/TaxiPrediction/raw/master/figures/pickups-time-heatmap-no-title.jpg)
 
 
 
-### 3. Data preparation with Apache Spark on a Amazon Web Services (AWS) Cluster
+### 3. Data preparation with Apache Spark
+##### Amazon Web Services (AWS) Cluster: ([notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/1.%20Setup%20Project.ipynb))
 
-* We used Amazon Web Services (AWS) to setup a 5-node Spark cluster (each machine had 8 cores, 16 GB RAM), and configured the cluster setup to leverage maximum resources by Spark.
-* We especially used the cluster to load the 60+ GB of raw data into an Amazon S3 bucket, and to process and prepare the data for input into machine learning algorithms.
+* We used AWS to setup a 5-node Spark cluster (each machine had 8 cores, 16 GB RAM), and configured the cluster setup to leverage maximum resources by Spark.
+* We especially used the cluster to load the 60+ GB of raw data into an Amazon S3 bucket, and to process and prepare the data for input into machine learning algorithms (see the next step).
 
-#### Data cleansing: ([notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/DataPrepAWSSpark.ipynb))
-* We setup our cluster in AWS and stored the dataset in S3 [notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/1.%20Setup%20Project.ipynb)
+##### Data cleansing: ([notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/2.%20DataPrepAWSSpark.ipynb))
+
 * We had to parse 440 million records and remove dirty records (e.g. nulls, invalid geographical coordinates, etc.)
 * Feature extraction:
-  * Location features: We used geohashing to discretize the location data. This is very important because we were able to adjust the granularity of the precision of the location (different size of rectangles) - and make predictions on these locations.
-  * We also added additional features like cosine & sine on the time and day of the week fields (see our [notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/DataPrepAWSSpark.ipynb) for more information in our notebooks)
-  * We grouped the entire dataset by time of the day(binned), day of the week & location ([geohash](https://github.com/hkwi/python-geohash)).
-
-
+  * Location features: We used [geohashing](https://en.wikipedia.org/wiki/Geohash) to discretize the location data. This is very important because we were able to adjust the granularity of the precision of the location (different size of rectangles) - and make predictions on these locations.
+  * We also added additional features based on the time and day of the week, seasons, et.
+  * We grouped the entire dataset by time (binned into half hours), day and geohashed location.
 
 ### 4. Machine learning (Pandas/Scikit learn)
-#### Approach 1: Predicting the pickup density for an average day of week and time of day
+##### Approach 1: Predicting the pickup density for an average day of week and time of day
 * We used two models:
   * Random Forest regression: ([notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/Machine%20Learning%20(Random%20Forest).ipynb))
   * k-Nearest Neighbors regression: ([notebook](https://github.com/sdaulton/TaxiPrediction/blpb/master/Machine%20Learning%20(kNN).ipynb))
@@ -74,30 +71,31 @@ Lastly, we started work on predicting where people wanted to go, based on their 
   * How we modeled the data
   * The abiltiy of the Random Forest algorithm is able to capture the complexities in the above features
 * A taxi company could use this type of prediction for developing long-term policies for improved taxi distribution.
-
  
 
-##### Predicted Density Distribution vs. Actual Density Distribution on a Monday
+**Predicted Density Distribution vs. Actual Density Distribution on a Monday**
 ![image](https://raw.githubusercontent.com/sdaulton/TaxiPrediction/master/figures/monday-24hours.gif)
 
 The above image shows the predicted number of pickups on a given Monday using a random forest regressor on the the left and the actual number of pickups on the right.  The sheet number at the top of each image corresponds to the hour of the day.
 
 
-#### Approach 2: Predicting the pickup density for a specific date and time in the future
+##### Approach 2: Predicting the pickup density for a specific date and time in the future
 * To make predictions about the future, we separated pre-2015 records from 2015 records, while keeping the data of each specific day of the year seperate
 * Combined NYC taxi trip data with features extracted from NYC weather data
 * We trained a Random Forest regressor using pre-2015 data and tested regressor by on the 2015  data([notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/Machine%20Learning%20(Random%20Forest%2C%20train-valid-test).ipynb))
 *  A taxi company could use this type of prediction on a daily basis to tune their policies based on weather or other factors to maximize coverage on a specific day.
 
-##### Predicted Density Distribution vs. Actual Density Distribution on a Specific Date in the Future
+**Predicted Density Distribution vs. Actual Density Distribution on a Specific Date in the Future**
 ![image](https://github.com/sdaulton/TaxiPrediction/raw/master/figures/pickup-density-may-1.gif)
  
 Note: the noise in the data became more apparent when we used this fine temporal granularity, and the prediction accuracy decreased.  We believe this results from the regressor thinking that that no data for a particular location and time means the number of pickups is unknown.  Of course in reality, no records for a particualr location and time means zero pickups at that location and time.  We hypothesize that this misunderstanding leads to the widespread overprediction in areas outside Manhattan.
 
-#### Approach 3: Predicting the dropoff location (lat/long) based on the pickup location & time, day of week
+##### Approach 3: Predicting the dropoff location (lat/long) based on the pickup location & time, day of week
 * Here we aggregated the dataset by pickup location, dropoff location, day of week & time slot: [notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/7a.%20Destinations%20(aggregated)%20data%20prep.ipynb)
 * We trained a random forest model on this for multi output regression: predicting two variables (dropoff lat/long): [notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/7b.%20Destination%20Prediction%20(Pandas%20and%20sklearn).ipynb)
 * The best RMSE value that we got was 0.120. In NYC each longitude is approx 53 miles & latitude is approx 69 miles (see notebook for refernece). This **gives an error range of 6.36 x 8.28 square miles**. So we do not have a great predictor here (but a great learning experience in modeling this problem)
+
+<script type='text/javascript' src='https://public.tableau.com/javascripts/api/viz_v1.js'></script><div class='tableauPlaceholder' style='width: 804px; height: 519px;'><noscript><a href='#'><img alt='Where do people go from where? ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;pi&#47;pickup-destination-coupling&#47;Dashboard1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz' width='804' height='519' style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='site_root' value='' /><param name='name' value='pickup-destination-coupling&#47;Dashboard1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;pi&#47;pickup-destination-coupling&#47;Dashboard1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='showVizHome' value='no' /><param name='showTabs' value='y' /><param name='bootstrapWhenNotified' value='true' /></object></div>
 
 ### 4. Next Steps:
 To really make this last model shine we would have to adjust the data preparation, so that we feed information about locations without any pickups to the model as well. Right now our model receives no data about the number of pickups in these locations is and thus thinks that the number of pickups is unknown.  However, the absence of records at some locations means that there were zero rides in that time period.  We believe that training a model with that knowledge would lead to more accurate predictions for the number of pickups on a specific date and time, such asMay 1st at 6am.  
