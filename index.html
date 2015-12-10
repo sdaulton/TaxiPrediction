@@ -33,38 +33,27 @@
       <section id="main_content" class="inner">
         <p><img src="https://github.com/sdaulton/TaxiPrediction/raw/master/figures/2013-24hours.gif" alt="image"></p>
 
-<h2>
-<a id="the-yellow-taxicab-an-nyc-icon" class="anchor" href="#the-yellow-taxicab-an-nyc-icon" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Yellow Taxicab: an NYC Icon</h2>
+<h1>
+<a id="the-yellow-taxicab-an-nyc-icon" class="anchor" href="#the-yellow-taxicab-an-nyc-icon" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Yellow Taxicab: an NYC Icon</h1>
 
 <p>New York City, being the most populous city in the United States, has a vast and complex transportation system, including one of the largest subway systems in the world and a large fleet of more than 13,000 yellow and green taxis, that have become iconic subjects in photographs and movies.</p>
 
 <p>The subway system digests the lion share of NYC's public transport use, but the 54% of NYC's residents that don't own a car and therefore rely on public transportation still take almost 200 million taxi trips per year!</p>
 
-<h2>
-<a id="440-million-taxi-trips" class="anchor" href="#440-million-taxi-trips" aria-hidden="true"><span class="octicon octicon-link"></span></a>440 million taxi trips</h2>
+<h3>
+<a id="440-million-taxi-trips" class="anchor" href="#440-million-taxi-trips" aria-hidden="true"><span class="octicon octicon-link"></span></a>440 million taxi trips</h3>
 
-<p>Thanks to some FOIL requests, data about these taxi trips has been available to the public since last year, making it a data scientist's dream. We endeavoured to delve into this gold mine using 2.5 years of NYC taxi trip data - around 440 million records - going from January 2013 to June 2015.</p>
+<p>Thanks to some <a href="https://www.dos.ny.gov/coog/freedomfaq.html">FOIL requests</a>, data about these taxi trips has been available to the public since last year, making it a data scientist's dream. We endeavoured to delve into this gold mine using 2.5 years of NYC taxi trip data - around 440 million records - going from January 2013 to June 2015.</p>
 
 <h3>
-<a id="the-data" class="anchor" href="#the-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Data:</h3>
-
-<ul>
-<li>
-<a href="http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml">Raw NYC Taxi Trip Data</a> </li>
-<li>
-<a href="https://raw.githubusercontent.com/sdaulton/TaxiPrediction/raw/master/data/nyc-weather-data.csv">NYC Weather Data</a> from <a href="http://www.ncdc.noaa.gov/cdo-web/datasets">NOAA</a>
-</li>
-</ul>
-
-<h2>
-<a id="predicting-pickup-density" class="anchor" href="#predicting-pickup-density" aria-hidden="true"><span class="octicon octicon-link"></span></a>Predicting pickup density</h2>
+<a id="predicting-pickup-density" class="anchor" href="#predicting-pickup-density" aria-hidden="true"><span class="octicon octicon-link"></span></a>Predicting pickup density</h3>
 
 <p>The primary objective of this project was to predict the density of taxi pickups throughout New York City as it changes from day to day and hour to hour.</p>
 
-<p>So, given a specific location, date and time, can we  predict the number of pickups in that location to a reasonably high accuracy?</p>
+<p>So, given a specific location, date and time, can we  predict the number of pickups in that location to a reasonably high accuracy? A secondary objective was to also predict the dropoff location.</p>
 
-<h2>
-<a id="to-make-transportation-more-efficient" class="anchor" href="#to-make-transportation-more-efficient" aria-hidden="true"><span class="octicon octicon-link"></span></a>To make transportation more efficient</h2>
+<h3>
+<a id="making-transportation-more-efficient" class="anchor" href="#making-transportation-more-efficient" aria-hidden="true"><span class="octicon octicon-link"></span></a>Making transportation more efficient</h3>
 
 <ol>
 <li>
@@ -75,14 +64,33 @@
 <strong>Data scientists</strong>: It is interesting for data scientist to see how we have modeled location data in a simple way and yet able to get reasonably good predictions</li>
 </ol>
 
-<h2>
-<a id="our-approach" class="anchor" href="#our-approach" aria-hidden="true"><span class="octicon octicon-link"></span></a>Our Approach</h2>
+<h3>
+<a id="random-forests-find-the-hot-spots" class="anchor" href="#random-forests-find-the-hot-spots" aria-hidden="true"><span class="octicon octicon-link"></span></a>Random forests find the hot spots</h3>
+
+<p>After preparing the data in the cloud with Amazon Web Services, we trained random forests with deep trees to predict the pickup density. We did that in two approaches, one which predicts pickup density on an average day of the week (e.g. Mondays). A second forest predicts pickup density on a specific day (e.g. May 1, 2015). The first performs really well, being able to account for 95% of the variation in the data. The second still does reasonable well, predicting density within about a factor of 1.5.</p>
+
+<p>Lastly, we started work on predicting where people wanted to go, based on their pickup location. Initial results aren't terribly good, but we have ideas to improve upon this.</p>
+
+<h1>
+<a id="our-approach" class="anchor" href="#our-approach" aria-hidden="true"><span class="octicon octicon-link"></span></a>Our Approach</h1>
 
 <h3>
-<a id="1--exploratory-data-analysis" class="anchor" href="#1--exploratory-data-analysis" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.  Exploratory data analysis</h3>
+<a id="1-the-data-we-used" class="anchor" href="#1-the-data-we-used" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. <strong>The data we used:</strong>
+</h3>
 
 <ul>
-<li>The data is currently available in Google BigQuery, which allowed us to explore the data directly in Tableau.</li>
+<li>
+<a href="http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml">Raw NYC Taxi Trip Data</a> </li>
+<li>
+<a href="https://raw.githubusercontent.com/sdaulton/TaxiPrediction/master/data/nyc-weather-data.csv">NYC Weather Data</a> from <a href="http://www.ncdc.noaa.gov/cdo-web/datasets">NOAA</a>
+</li>
+</ul>
+
+<h3>
+<a id="2--exploratory-data-analysis" class="anchor" href="#2--exploratory-data-analysis" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.  Exploratory data analysis</h3>
+
+<ul>
+<li>The data is currently available in <a href="https://bigquery.cloud.google.com/table/imjasonh-storage:nyctaxi.trip_data">Google BigQuery</a>, which allowed us to explore the data directly in Tableau.</li>
 </ul>
 
 <h4>
@@ -94,10 +102,10 @@
 <p><img src="https://github.com/sdaulton/TaxiPrediction/raw/master/figures/pickups-time-heatmap-no-title.jpg" alt="image"></p>
 
 <h3>
-<a id="2-data-preparation-with-apache-spark-on-a-amazon-web-services-aws-cluster" class="anchor" href="#2-data-preparation-with-apache-spark-on-a-amazon-web-services-aws-cluster" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Data preparation with Apache Spark on a Amazon Web Services (AWS) Cluster</h3>
+<a id="3-data-preparation-with-apache-spark-on-a-amazon-web-services-aws-cluster" class="anchor" href="#3-data-preparation-with-apache-spark-on-a-amazon-web-services-aws-cluster" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. Data preparation with Apache Spark on a Amazon Web Services (AWS) Cluster</h3>
 
 <ul>
-<li>We used AWS to setup a 5-node Spark cluster (each machine had 8 cores, 16 GB RAM), and configured the cluster setup to leverage maximum resources by Spark.</li>
+<li>We used Amazon Web Services (AWS) to setup a 5-node Spark cluster (each machine had 8 cores, 16 GB RAM), and configured the cluster setup to leverage maximum resources by Spark.</li>
 <li>We especially used the cluster to load the 60+ GB of raw data into an Amazon S3 bucket, and to process and prepare the data for input into machine learning algorithms.</li>
 </ul>
 
@@ -119,7 +127,7 @@
 </ul>
 
 <h3>
-<a id="3-machine-learning-pandasscikit-learn" class="anchor" href="#3-machine-learning-pandasscikit-learn" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. Machine learning (Pandas/Scikit learn)</h3>
+<a id="4-machine-learning-pandasscikit-learn" class="anchor" href="#4-machine-learning-pandasscikit-learn" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. Machine learning (Pandas/Scikit learn)</h3>
 
 <h4>
 <a id="approach-1-predicting-the-pickup-density-for-an-average-day-of-week-and-time-of-day" class="anchor" href="#approach-1-predicting-the-pickup-density-for-an-average-day-of-week-and-time-of-day" aria-hidden="true"><span class="octicon octicon-link"></span></a>Approach 1: Predicting the pickup density for an average day of week and time of day</h4>
@@ -153,7 +161,7 @@
 <h5>
 <a id="predicted-density-distribution-vs-actual-density-distribution-on-a-monday" class="anchor" href="#predicted-density-distribution-vs-actual-density-distribution-on-a-monday" aria-hidden="true"><span class="octicon octicon-link"></span></a>Predicted Density Distribution vs. Actual Density Distribution on a Monday</h5>
 
-<p><img src="https://github.com/sdaulton/TaxiPrediction/raw/master/images/Actual-Predicted.gif" alt="image"></p>
+<p><img src="https://raw.githubusercontent.com/sdaulton/TaxiPrediction/master/figures/monday-24hours.gif" alt="image"></p>
 
 <p>The above image shows the predicted number of pickups on a given Monday using a random forest regressor on the the left and the actual number of pickups on the right.  The sheet number at the top of each image corresponds to the hour of the day.</p>
 
@@ -173,6 +181,17 @@
 <p><img src="https://github.com/sdaulton/TaxiPrediction/raw/master/figures/pickup-density-may-1.gif" alt="image"></p>
 
 <p>Note: the noise in the data became more apparent when we used this fine temporal granularity, and the prediction accuracy decreased.  We believe this results from the regressor thinking that that no data for a particular location and time means the number of pickups is unknown.  Of course in reality, no records for a particualr location and time means zero pickups at that location and time.  We hypothesize that this misunderstanding leads to the widespread overprediction in areas outside Manhattan.</p>
+
+<h4>
+<a id="approach-3-predicting-the-dropoff-location-latlong-based-on-the-pickup-location-day-of-the-week-and-particular-time-slot" class="anchor" href="#approach-3-predicting-the-dropoff-location-latlong-based-on-the-pickup-location-day-of-the-week-and-particular-time-slot" aria-hidden="true"><span class="octicon octicon-link"></span></a>Approach 3: Predicting the dropoff location (lat/long) based on the pickup location, day of the week and particular time slot</h4>
+
+<ul>
+<li>Here we aggregated the dataset by pickup location, dropoff location, day of week &amp; time slot: <a href="https://github.com/sdaulton/TaxiPrediction/blob/master/7a.%20Destinations%20(aggregated)%20data%20prep.ipynb">notebook</a>
+</li>
+<li>We trained a random forest model on this for multi output regression: predicting two variables (dropoff lat/long): <a href="https://github.com/sdaulton/TaxiPrediction/blob/master/7b.%20Destination%20Prediction%20(Pandas%20and%20sklearn).ipynb">notebook</a>
+</li>
+<li>The best RMSE value that we got was 0.120. In NYC each longitude is approx 53 miles &amp; latitude is approx 69 miles (see notebook for refernece). This <strong>gives an error range of 6.36 x 8.28 square miles</strong>. So we do not have a great predictor here (but a great learning experience in modeling this problem)</li>
+</ul>
 
 <h3>
 <a id="4-next-steps" class="anchor" href="#4-next-steps" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. Next Steps:</h3>
