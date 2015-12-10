@@ -66,6 +66,8 @@ So, given a specific location, date and time, can we  predict the number of pick
 * The Random Forest model performed very well with a coefficient of determination (R-squared) on the test data of 0.9505, indicating that variation in the model explains over 95% of the variation in the pickup density distribution.  We attribute this success to:
   * How we modeled the data
   * The abiltiy of the Random Forest algorithm is able to capture the complexities in the above features
+* A taxi company could use this type of prediction for developing long-term policies for improved taxi distribution.
+
  
 
 ##### Predicted Density Distribution vs. Actual Density Distribution on a Monday
@@ -74,18 +76,25 @@ So, given a specific location, date and time, can we  predict the number of pick
 The above image shows the predicted number of pickups on a given Monday using a random forest regressor on the the left and the actual number of pickups on the right.  The sheet number at the top of each image corresponds to the hour of the day.
 
 
-#### Approach 2: Predicting the pickup density for a specific date and time
-* We used Random Forest regression: ([notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/Machine%20Learning%20(Random%20Forest%2C%20train-valid-test).ipynb))
+#### Approach 2: Predicting the pickup density for a specific date and time in the future
+* To make predictions about the future, we separated pre-2015 records from 2015 records, while keeping the data of each specific day of the year seperate
+* Combined NYC taxi trip data with features extracted from NYC weather data
+* We trained a Random Forest regressor using pre-2015 data and tested regressor by on the 2015  data([notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/Machine%20Learning%20(Random%20Forest%2C%20train-valid-test).ipynb))
+*  A taxi company could use this type of prediction on a daily basis to tune their policies based on weather or other factors to maximize coverage on a specific day.
+##### Predicted Density Distribution vs. Actual Density Distribution on a Specific Date in the Future
+![image](https://github.com/sdaulton/TaxiPrediction/blob/master/figures/pickup-density-may-1.gif)
+ 
+* Note: the noise in the data became more apparent when we used this fine temporal granularity, and the prediction accuracy decreased.  We believe this results from the regressor thinking that that no data for a particular location and time means the number of pickups is unknown.  Of course in reality, no records for a particualr location and time means zero pickups at that location and time.  We hypothesize that this misunderstanding leads to the widespread overprediction in areas outside Manhattan.
+
+### 4. Next Steps:
+To really make this last model shine we would have to adjust the data preparation, so that we feed information about locations without any pickups to the model as well. Right now our model receives no data about the number of pickups in these locations is and thus thinks that the number of pickups is unknown.  However, the absence of records at some locations means that there were zero rides in that time period.  We believe that training a model with that knowledge would lead to more accurate predictions for the number of pickups on a specific date and time, such asMay 1st at 6am.  
 
 
-
-### 4. The Project Team
+### The Project Team
 * [Samuel Daulton](http://github.com/sdaulton)
 * [Sethu Raman](http://github.com/rsethur)
 * [Tijl Kindt](http://github.com/tijlk)
 
-
-
-### 5. Citations/Credit/References
+### Citations/Credit/References
 1. Thanks to Harvard CS109 TF's: [Rahul Dave](https://github.com/rahuldave) & Team: we used parts of their code in multiple places: (a) Cluster setup in AWS (b) Machine learning
 2. [Geohash.py](https://github.com/hkwi/python-geohash): A nice geohash library
