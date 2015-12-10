@@ -28,6 +28,7 @@ So, given a specific location, date and time, can we  predict the number of pick
 2. **Traffic planning**: Planners can use the model predictions for traffic management on specific day/time/locations. The model can be enhanced in future to incorporate features like weather, holiday etc.
 3. **Data scientists**: It is interesting for data scientist to see how we have modeled location data in a simple way and yet able to get reasonably good predictions
 
+
 ## Our Approach
 
 ### 1.  Exploratory data analysis
@@ -36,6 +37,8 @@ So, given a specific location, date and time, can we  predict the number of pick
 #### Number of Pickups in 2013 and 2014
 ##### throughout the days of the year (horizontal axis) and the hours of the day (vertical axis)
 ![image](https://github.com/sdaulton/TaxiPrediction/blob/master/figures/pickups-time-heatmap-no-title.jpg)
+
+
 
 ### 2. Data preparation with Apache Spark on a Amazon Web Services (AWS) Cluster
 
@@ -48,6 +51,8 @@ So, given a specific location, date and time, can we  predict the number of pick
   * Location features: We used geohashing to discretize the location data. This is very important because we were able to adjust the granularity of the precision of the location (different size of rectangles) - and make predictions on these locations.
   * We also added additional features like cosine & sine on the time and day of the week fields (see our [notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/DataPrepAWSSpark.ipynb) for more information in our notebooks)
   * We grouped the entire dataset by time of the day(binned), day of the week & location ([geohash](https://github.com/hkwi/python-geohash)).
+
+
 
 ### 3. Machine learning (Pandas/Scikit learn)
 #### Approach 1: Predicting the pickup density for an average day of week and time of day
@@ -62,11 +67,11 @@ So, given a specific location, date and time, can we  predict the number of pick
   * How we modeled the data
   * The abiltiy of the Random Forest algorithm is able to capture the complexities in the above features
  
+
 ##### Predicted Density Distribution vs. Actual Density Distribution on a Monday
 ![image](https://github.com/sdaulton/TaxiPrediction/raw/master/images/Actual-Predicted.gif)
 
 The above image shows the predicted number of pickups on a given Monday using a random forest regressor on the the left and the actual number of pickups on the right.  The sheet number at the top of each image corresponds to the hour of the day.
-
 
 
 #### Approach 2: Predicting the pickup density for a specific date and time
@@ -78,6 +83,8 @@ The above image shows the predicted number of pickups on a given Monday using a 
 * [Samuel Daulton](http://github.com/sdaulton)
 * [Sethu Raman](http://github.com/rsethur)
 * [Tijl Kindt](http://github.com/tijlk)
+
+
 
 ### 5. Citations/Credit/References
 1. Thanks to Harvard CS109 TF's: [Rahul Dave](https://github.com/rahuldave) & Team: we used parts of their code in multiple places: (a) Cluster setup in AWS (b) Machine learning
