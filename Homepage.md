@@ -14,6 +14,7 @@ Thanks to some FOIL requests, data about these taxi trips has been available to 
 
 ### The Data:
 * [Raw NYC Taxi Trip Data](http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml) 
+* [NYC Weather Data](https://raw.githubusercontent.com/sdaulton/TaxiPrediction/master/data/nyc-weather-data.csv) from [NOAA](http://www.ncdc.noaa.gov/cdo-web/datasets)
 
 ## Predicting pickup density
 
@@ -45,6 +46,7 @@ So, given a specific location, date and time, can we  predict the number of pick
 * We especially used the cluster to load the 60+ GB of raw data into an Amazon S3 bucket, and to process and prepare the data for input into machine learning algorithms.
 
 #### Data cleansing: ([notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/DataPrepAWSSpark.ipynb))
+* We setup our cluster in AWS and stored the dataset in S3 [notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/1.%20Setup%20Project.ipynb)
 * We had to parse 440 million records and remove dirty records (e.g. nulls, invalid geographical coordinates, etc.)
 * Feature extraction:
   * Location features: We used geohashing to discretize the location data. This is very important because we were able to adjust the granularity of the precision of the location (different size of rectangles) - and make predictions on these locations.
@@ -57,7 +59,7 @@ So, given a specific location, date and time, can we  predict the number of pick
 #### Approach 1: Predicting the pickup density for an average day of week and time of day
 * We used two models:
   * Random Forest regression: ([notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/Machine%20Learning%20(Random%20Forest).ipynb))
-  * k-Nearest Neighbors regression: ([notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/Machine%20Learning%20(kNN).ipynb))
+  * k-Nearest Neighbors regression: ([notebook](https://github.com/sdaulton/TaxiPrediction/blpb/master/Machine%20Learning%20(kNN).ipynb))
 * The main features we used were
   * Discretized latitude/longitude (derived back from geohashes)
   * Discretized time - but encoded in 0 to 1
@@ -80,8 +82,9 @@ The above image shows the predicted number of pickups on a given Monday using a 
 * Combined NYC taxi trip data with features extracted from NYC weather data
 * We trained a Random Forest regressor using pre-2015 data and tested regressor by on the 2015  data([notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/Machine%20Learning%20(Random%20Forest%2C%20train-valid-test).ipynb))
 *  A taxi company could use this type of prediction on a daily basis to tune their policies based on weather or other factors to maximize coverage on a specific day.
+
 ##### Predicted Density Distribution vs. Actual Density Distribution on a Specific Date in the Future
-![image](https://github.com/sdaulton/TaxiPrediction/blob/master/figures/pickup-density-may-1.gif)
+![image](https://github.com/sdaulton/TaxiPrediction/raw/master/figures/pickup-density-may-1.gif)
  
 Note: the noise in the data became more apparent when we used this fine temporal granularity, and the prediction accuracy decreased.  We believe this results from the regressor thinking that that no data for a particular location and time means the number of pickups is unknown.  Of course in reality, no records for a particualr location and time means zero pickups at that location and time.  We hypothesize that this misunderstanding leads to the widespread overprediction in areas outside Manhattan.
 
