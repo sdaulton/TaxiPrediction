@@ -149,7 +149,7 @@
 
 <ul>
 <li>How we modeled the data</li>
-<li>The abiltiy of the Random Forest algorithm is able to capture the complexities in the above features</li>
+<li>The ability of the Random Forest algorithm to capture the complexities in the above features, and especially latitude and longitude</li>
 </ul>
 </li>
 <li>A taxi company could use this type of prediction for developing long-term policies for improved taxi distribution.</li>
@@ -164,16 +164,16 @@
 <a id="approach-2-predicting-the-pickup-density-for-a-specific-date-and-time-in-the-future" class="anchor" href="#approach-2-predicting-the-pickup-density-for-a-specific-date-and-time-in-the-future" aria-hidden="true"><span class="octicon octicon-link"></span></a>Approach 2: Predicting the pickup density for a specific date and time in the future</h5>
 
 <ul>
-<li>To make predictions about the future, we separated pre-2015 records from 2015 records, while keeping the data of each specific day of the year seperate</li>
+<li>To make predictions about the future, we separated pre-2015 records from 2015 records, while keeping the data of each specific day of the year separate</li>
 <li>Combined NYC taxi trip data with features extracted from NYC weather data</li>
-<li>We trained a Random Forest regressor using pre-2015 data and tested regressor by on the 2015  data(<a href="https://github.com/sdaulton/TaxiPrediction/blob/master/4b.%20Random%20Forest%20(specific%20days).ipynb">notebook</a>)</li>
+<li>We trained a Random Forest regressor using pre-2015 data and tested regressor by on the 2015 data (<a href="https://github.com/sdaulton/TaxiPrediction/blob/master/4b.%20Random%20Forest%20(specific%20days).ipynb">notebook</a>)</li>
 <li> A taxi company could use this type of prediction on a daily basis to tune their policies based on weather or other factors to maximize coverage on a specific day.</li>
 </ul>
 
 <p><strong>Predicted Density Distribution vs. Actual Density Distribution on a Specific Date in the Future</strong>
 <img src="https://github.com/sdaulton/TaxiPrediction/raw/master/figures/pickup-density-may-1.gif" alt="image"></p>
 
-<p>Note: the noise in the data became more apparent when we used this fine temporal granularity, and the prediction accuracy decreased.  We believe this results from the regressor thinking that that no data for a particular location and time means the number of pickups is unknown.  Of course in reality, no records for a particualr location and time means zero pickups at that location and time.  We hypothesize that this misunderstanding leads to the widespread overprediction in areas outside Manhattan.</p>
+<p>Note: the noise in the data became more apparent when we used this fine temporal granularity, and the prediction accuracy decreased.  We believe this results from the regressor thinking that that no data for a particular location and time means the number of pickups is unknown.  Of course in reality, no records for a particular location and time means zero pickups at that location and time, because we assume that all taxi trips are recorded.  We hypothesize that this shortcoming in our data preparation leads to the widespread overprediction in areas outside Manhattan.</p>
 
 <h5>
 <a id="approach-3-predicting-the-dropoff-location-latlong-based-on-the-pickup-location--time-day-of-week" class="anchor" href="#approach-3-predicting-the-dropoff-location-latlong-based-on-the-pickup-location--time-day-of-week" aria-hidden="true"><span class="octicon octicon-link"></span></a>Approach 3: Predicting the dropoff location (lat/long) based on the pickup location &amp; time, day of week</h5>
@@ -181,13 +181,14 @@
 <ul>
 <li>Here we aggregated the dataset by pickup location, dropoff location, day of week &amp; time slot: <a href="https://github.com/sdaulton/TaxiPrediction/blob/master/5a.%20Destinations%20-%20DataPrepAWSSpark.ipynb">notebook</a>
 </li>
-<li>We trained a random forest model on this for multi output regression: predicting two variables (dropoff lat/long): <a href="https://github.com/sdaulton/TaxiPrediction/blob/master/5b.%20Destinations%20-%20Random%20Forest.ipynb">notebook</a>
-</li>
+<li>We trained a random forest model on this for multi output regression: predicting two variables (dropoff lat/long): <a href="https://github.com/sdaulton/TaxiPrediction/blob/master/5b.%20Destinations%20-%20Random%20Forest.ipynb">notebook</a>. So the idea was that given that somebody hails a cab at location X, we would want to predict where that customer wants to be dropped of.</li>
 <li>The best RMSE value that we got was 0.120. In NYC each longitude is approx 53 miles &amp; latitude is approx 69 miles (see notebook for refernece). This <strong>gives an error range of 6.36 x 8.28 square miles</strong>. So we do not have a great predictor here (but a great learning experience in modeling this problem)</li>
 </ul>
 
-<p></p><div>
-<a href="#"><img alt="Where do people go from where? " src="https://public.tableau.com/static/images/pi/pickup-destination-coupling/Dashboard1/1_rss.png"></a>  </div>
+<p>You can play around in Tableau below to explore the dropoff locations, given a pickup location.</p>
+
+<p>
+</p>
 
 <h3>
 <a id="4-next-steps" class="anchor" href="#4-next-steps" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. Next Steps:</h3>
