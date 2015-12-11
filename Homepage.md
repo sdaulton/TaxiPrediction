@@ -100,15 +100,15 @@ Note: the noise in the data became more apparent when we used this fine temporal
 ##### Approach 3: Predicting the dropoff location (lat/long) based on the pickup location & time, day of week
 * Here we aggregated the dataset by pickup location, dropoff location, day of week & time slot: [notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/5a.%20Destinations%20-%20DataPrepAWSSpark.ipynb)
 * We trained a random forest model on this for multi output regression: predicting two variables (dropoff lat/long): [notebook](https://github.com/sdaulton/TaxiPrediction/blob/master/5b.%20Destinations%20-%20Random%20Forest.ipynb). So the idea was that given that somebody hails a cab at location X, we would want to predict where that customer wants to be dropped of.
-* The best RMSE value that we got was 0.120. In NYC each longitude is approx 53 miles & latitude is approx 69 miles (see notebook for reference). This gives an error range of 6 x 8 square miles. So we do not have a great predictor here (but a great learning experience in modeling this problem)
+* The best RMSE value that we got was 0.120. In NYC each longitude is approx 53 miles & latitude is approx 69 miles (see notebook for reference). This gives an error range of 6 x 8 square miles. So we do not have a great predictor here (but a great learning experience in modeling this problem).
 
 You can play around in Tableau by clicking on the image below to explore the dropoff locations, given a pickup location.
 
 [ ![Image](https://raw.githubusercontent.com/sdaulton/TaxiPrediction/master/figures/dropoff-location.png)](https://public.tableau.com/profile/tijlk#!/vizhome/pickup-destination-coupling/Dashboard1)
 
-### 4. Next Steps:
-To really make this last model shine we would have to adjust the data preparation, so that we feed information about locations without any pickups to the model as well. Right now our model receives no data about the number of pickups in these locations is and thus thinks that the number of pickups is unknown.  However, the absence of records at some locations means that there were zero rides in that time period.  We believe that training a model with that knowledge would lead to more accurate predictions for the number of pickups on a specific date and time, such asMay 1st at 6am.  
+### 5. Next Steps:
 
+To really make the pickup density model shine we would have to adjust the data preparation, so that we feed information about locations without any pickups to the model as well. Right now our model receives no data about the number of pickups in these locations is and thus thinks that the number of pickups is unknown.  However, the absence of records at some locations means that there were zero rides in that time period.  We believe that training a model with that knowledge would lead to more accurate predictions for the number of pickups on a specific date and time, such as May 1st at 6am.
 
 ### The Project Team
 * [Samuel Daulton](http://github.com/sdaulton)
